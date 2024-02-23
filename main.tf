@@ -1,15 +1,6 @@
 terraform {
   required_version = ">= 1.1.0"
-  required_providers {
-    databricks = {
-      source = "databrickslabs/databricks"
-      version = "0.3.7"
-    }
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "~> 3.0.2"
-    }
-  }
+  
   cloud {
     organization = "AzureDatabricks"
     workspaces {
@@ -32,11 +23,9 @@ resource "azurerm_resource_group" "myresourcegroup" {
   location = var.location
 }
 
-data "databricks_scim_user" "admin" {
-  user_name    = "admin@example.com"
-  display_name = "Admin user"
-  set_admin    = true
-  default_roles = []
+resource "databricks_user" "workspace_user" {
+  user_name    = "haritha.cloudops@gmail.com"
+  display_name = "Admin user"  
 }
 
 resource "azurerm_databricks_workspace" "myworkspace" {
