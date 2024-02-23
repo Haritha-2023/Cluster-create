@@ -38,6 +38,13 @@ resource "databricks_user" "workspace_user" {
   display_name = "Admin user"  
 }
 
+resource "databricks_scim_user" "admin" {
+  user_name    = "admin@example.com"
+  display_name = "Admin user"
+  set_admin    = true
+  default_roles = []
+}
+
 resource "azurerm_databricks_workspace" "myworkspace" {
   location                      = azurerm_resource_group.myresourcegroup.location
   name                          = "${var.prefix}-workspace"
