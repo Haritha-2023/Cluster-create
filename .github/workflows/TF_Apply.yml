@@ -23,10 +23,10 @@ jobs:
         id: init
         run: terraform init
 
-      - name: Terraform Plan
-        id: plan
+      - name: Terraform Remove
+        id: remove
         if: github.event_name == 'push'
-        run: terraform plan -no-color
+        run: terraform destroy
         continue-on-error: true
 
       - name: Terraform Plan Status
