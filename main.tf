@@ -45,27 +45,7 @@ resource "azurerm_databricks_workspace" "myworkspace" {
   sku                           = "trial"
 }
 
-resource "databricks_cluster" "shared_autoscaling" {
-  cluster_name            = "${var.prefix}-Autoscaling-Cluster"
-  spark_version           = var.spark_version
-  node_type_id            = var.node_type_id
-  autotermination_minutes = 90
-  autoscale {
-    min_workers = var.min_workers
-    max_workers = var.max_workers
-  }
-  library {
-    pypi {
-        package = "scikit-learn==0.23.2"
-        // repo can also be specified here
-        }
 
-    }
-  
-  custom_tags = {
-    Department = "Engineering"
-  }
-}
 
 
 
