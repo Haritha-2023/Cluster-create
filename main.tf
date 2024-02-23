@@ -22,18 +22,18 @@ provider "azurerm" {
     features {}
 }
 provider "databricks" {
-  azure_workspace_resource_id = azurerm_databricks_workspace.myworkspace.id
+  azure_workspace_resource_id = azurerm_databricks_workspace.testworkspace.id
 }
 
-resource "azurerm_resource_group" "myresourcegroup" {
-  name     = "${var.prefix}-myresourcegroup"
+resource "azurerm_resource_group" "testresourcegroup" {
+  name     = "${var.prefix}-testresourcegroup"
   location = var.location
 }
 
-resource "azurerm_databricks_workspace" "myworkspace" {
-  location                      = azurerm_resource_group.myresourcegroup.location
-  name                          = "${var.prefix}-workspace"
-  resource_group_name           = azurerm_resource_group.myresourcegroup.name
+resource "azurerm_databricks_workspace" "testworkspace" {
+  location                      = azurerm_resource_group.testresourcegroup.location
+  name                          = "${var.prefix}-testworkspace"
+  resource_group_name           = azurerm_resource_group.testresourcegroup.name
   sku                           = "trial"
 }
 ###
@@ -45,8 +45,8 @@ resource "databricks_scim_user" "admin" {
 }
 
 
-resource "databricks_cluster" "shared_autoscaling" {
-  cluster_name            = "${var.prefix}-Autoscaling-Cluster"
+resource "databricks_cluster" "test_autoscaling" {
+  cluster_name            = "${var.prefix}-Testscaling-Cluster"
   spark_version           = var.spark_version
   node_type_id            = var.node_type_id
   autotermination_minutes = 90
