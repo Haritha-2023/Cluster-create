@@ -39,14 +39,6 @@ resource "azurerm_databricks_workspace" "myworkspace" {
   sku                           = "trial"
 }
 
-resource "databricks_scim_user" "admin" {
-  user_name    = "admin@example.com"
-  display_name = "Admin user"
-  set_admin    = true
-  default_roles = []
-}
-
-
 resource "databricks_cluster" "shared_autoscaling" {
   cluster_name            = "${var.prefix}-Autoscaling-Cluster"
   spark_version           = var.spark_version
@@ -69,36 +61,7 @@ resource "databricks_cluster" "shared_autoscaling" {
   }
 }
 
-resource "databricks_notebook" "notebook" {
-  content = base64encode("print('Welcome to your Python notebook')")
-  path = var.notebook_path
-  overwrite = false
-  mkdirs = true
-  language = "PYTHON"
-  format = "SOURCE"
-}
 
-resource "databricks_job" "myjob" {
-    name = "Featurization"
-    timeout_seconds = 3600
-    max_retries = 1
-    max_concurrent_runs = 1
-    existing_cluster_id = databricks_cluster.shared_autoscaling.id
-
-    notebook_task {
-        notebook_path = var.notebook_path
-    }
-
-    library {
-        pypi {
-            package = "fbprophet==0.6"
-        }
-    }
-
-    email_notifications {
-        no_alert_for_skipped_runs = true
-    }
-}
 
 
 
