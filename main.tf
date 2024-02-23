@@ -32,7 +32,7 @@ resource "azurerm_resource_group" "myresourcegroup" {
   location = var.location
 }
 
-resource "databricks_scim_user" "admin" {
+data "databricks_scim_user" "admin" {
   user_name    = "admin@example.com"
   display_name = "Admin user"
   set_admin    = true
